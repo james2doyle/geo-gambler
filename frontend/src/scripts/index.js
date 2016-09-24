@@ -3,11 +3,11 @@
 const loadMap = require('./app');
 
 window.coords = [{
-  title: 'Location 1',
+  title: 'Telus Garden',
   latitude: 49.281355,
   longitude: -123.116686,
 }, {
-  title: 'Location 2',
+  title: 'Chill Winston',
   latitude: 49.283623,
   longitude: -123.103991,
 }];
