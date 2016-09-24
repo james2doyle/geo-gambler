@@ -34,3 +34,10 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+
+# Elastic Beanstalk Files
+frontend/.elasticbeanstalk/*
+frontend/!.elasticbeanstalk/*.cfg.yml
+frontend/!.elasticbeanstalk/*.global.yml
+
+frontend/bin/
