@@ -1,0 +1,196 @@
+$body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$heading-font: $body-font;
+
+$normal: 400;
+$medium: 500;
+$bold: 700;
+
+$primary: #6699CC;
+$light: #ccc;
+$mid: #777;
+$dark: #333;
+
+$danger: #C93742;
+$success: #ACC23A;
+
+$sm: 37.5em;
+$md: 48em;
+$lg: 64em;
+$breakpoint-sm: '(min-width: #{$sm})' !default;
+$breakpoint-md: '(min-width: #{$md})' !default;
+$breakpoint-lg: '(min-width: #{$lg})' !default;
+
+$golden-rule: 1.6180339887498948420;
+
+:placeholder-shown {
+  color: $mid;
+  color: rgba(black,.5);
+}
+
+::selection {
+  background-color: $primary;
+  background-color: rgba($primary, 0.5);
+}
+
+::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+body {
+  font: normal normal normal 16px/#{$golden-rule} $body-font;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  margin: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+
+.browsehappy {
+  margin: 0;
+  padding: 1rem 0;
+  color: white;
+  text-align: center;
+  background-color: $primary;
+}
+
+#main:focus {
+  outline: none;
+}
+
+#skippy {
+  display: block;
+  padding: 1em 0;
+  color: $dark;
+  background-color: $primary;
+  outline: 0;
+  span {
+    padding: .5em;
+    outline: 1px dotted;
+  }
+}
+
+.color-primary {
+  color: $primary;
+}
+
+.bg-primary {
+  color: white;
+  background-color: $primary;
+}
+
+.color-light {
+  color: $light;
+}
+
+.bg-light {
+  color: white;
+  background-color: $light;
+}
+
+.color-mid {
+  color: $mid;
+}
+
+.bg-mid {
+  color: white;
+  background-color: $mid;
+}
+
+.color-dark {
+  color: $dark;
+}
+
+.bg-dark {
+  color: white;
+  background-color: $dark;
+}
+
+.color-danger {
+  color: $danger;
+}
+
+.bg-danger {
+  color: white;
+  background-color: $danger;
+}
+
+.color-success {
+  color: $success;
+}
+
+.bg-success {
+  color: white;
+  background-color: $success;
+}
+
+@mixin show-when-loaded() {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  body.loaded & {
+    opacity: 1;
+  }
+}
+
+.show-on-load {
+  @include show-when-loaded();
+}
+
+.main-map {
+  width: 100vw;
+  height: 100vh;
+}
+
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  // styles for retina screens
+}
+
+// iPhone 5:
+@media screen and (device-aspect-ratio: 40/71) {
+  // styles for iPhone 5
+}
+
+// iPhone 6:
+@media screen and (device-aspect-ratio: 375/667) {
+  // styles for iPhone 6
+}
+
+@media #{$breakpoint-sm} {
+  // styles for $breakpoint-sm
+}
+
+@media #{$breakpoint-md} {
+  // styles for $breakpoint-md
+}
+
+@media #{$breakpoint-lg} {
+  // styles for $breakpoint-lg
+}
+
+@media #{$breakpoint-md} and (orientation : portrait) {
+  // .xs-hide.sm-hide {
+  //   display: block !important;
+  // }
+}
