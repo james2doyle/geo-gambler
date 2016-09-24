@@ -1,8 +1,11 @@
 function loadMap(locations) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     const mapEl = document.getElementById('map');
     const map = new google.maps.Map(mapEl, {
-      center: { lat: locations[0].latitude, lng: locations[0].longitude },
+      // center: {
+      //   lat: locations[0].latitude,
+      //   lng: locations[0].longitude
+      // },
       zoom: 15,
       scrollwheel: false
     });
@@ -34,6 +37,7 @@ function loadMap(locations) {
         map.setCenter(pos);
         map.panTo(myMarker.getPosition());
         map.setZoom(17);
+        document.body.classList.add('my-location-loaded');
       }, function() {
         handleLocationError(true, map.getCenter());
       });
@@ -43,28 +47,21 @@ function loadMap(locations) {
     }
 
     function handleLocationError(browserHasGeolocation, pos) {
-      alert(browserHasGeolocation ?
+      reject(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     }
 
-    let marker, i;
-
-    for (i = 0; i < locations.length; i++) {
-      marker = new google.maps.Marker({
+    for (let i = 0; i < locations.length; i++) {
+      let marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
         icon: '/img/dollar.svg',
         map: map
+      }).addListener('click', function() {
+        map.panTo(this.getPosition());
+        infowindow.setContent(locations[i].title);
+        infowindow.open(map, this);
       });
-
-      google.maps.event.addListener(marker, 'click', (function (marker, i) {
-        return function () {
-          infowindow.setContent(locations[i].title);
-          infowindow.open(map, marker);
-          map.panTo(marker.getPosition());
-          map.setZoom(17);
-        };
-      })(marker, i));
     }
 
     resolve(map);

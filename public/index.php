@@ -9,6 +9,11 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQ0NxmONBNjmeb9cJUkdIotSlUVClTYaw"></script>
 </head>
 <body>
+  <div class="map-box">
+    <div class="map-box-inner amount">Nearby Locations: <div id="location-count"></div></div>
+    <div class="map-box-inner profile">Name: <div id="username">James</div></div>
+    <div class="map-box-inner amount"><div id="credits">2000</div> Credits</div>
+  </div>
   <div id="map" class="main-map"></div>
   <script src="js/script.js" type="text/javascript"></script>
 </body>

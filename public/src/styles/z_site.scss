@@ -1,3 +1,5 @@
+@import "vars";
+
 $body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $heading-font: $body-font;
 
@@ -158,9 +160,62 @@ body {
   @include show-when-loaded();
 }
 
+@mixin show-when-my-location-loaded() {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  body.my-location-loaded & {
+    opacity: 1;
+  }
+}
+
+.show-when-my-location-loaded {
+  @include show-when-my-location-loaded();
+}
+
 .main-map {
   width: 100vw;
   height: 100vh;
+  &:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url($spinner) center no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  .my-location-loaded &:before {
+    display: none;
+  }
+}
+
+.map-box {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  .map-box-inner {
+    @include show-when-my-location-loaded();
+    margin: 0 0 10px;
+    overflow: hidden;
+    text-align: center;
+    color: #565656;
+    font-family: Roboto, Arial, sans-serif;
+    user-select: none;
+    font-size: 11px;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 2px;
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    div {
+      display: inline;
+    }
+  }
 }
 
 @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {

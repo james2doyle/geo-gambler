@@ -29,16 +29,7 @@ gulp.task('js', function() {
   .pipe(browserify({
     insertGlobals : true
   }))
-  .pipe(buble({
-    transforms: {
-      arrow: true,
-      modules: true,
-      classes: true,
-      letConst: true,
-      templateString: true,
-      dangerousForOf: true
-    }
-  }))
+  .pipe(buble())
   .pipe(concat('script.js'))
   .pipe(sourcemaps.write())
   .pipe(header(banner, { pkg : pkg, date: date } ))

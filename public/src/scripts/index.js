@@ -1,15 +1,19 @@
 // require('./__modernizr.custom.js');
 
 const loadMap = require('./app');
+const updateUi = require('./ui');
 
 window.addEventListener('load', () => {
   fetch('https://6c48ebbd.ngrok.io/location')
   .then(function(response) {
     return response.json();
   })
-  .then(loadMap)
+  .then(function(locations) {
+    return updateUi(locations).then(loadMap);
+  })
   .then(map => {
-    console.log('loaded');
+    // console.log('loaded ', map);
+    document.body.classList.add('loaded');
   }, err => {
     console.log(err);
   });
