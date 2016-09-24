@@ -1,6 +1,5 @@
-module.exports = function (infowindow, location, map, marker) {
+module.exports = function (infowindow, location, map) {
+  map.panTo(this.getPosition());
   infowindow.setContent(location.title);
-  infowindow.open(map, marker);
-  map.panTo(marker.getPosition());
-  map.setZoom(17);
+  infowindow.open(map, this);
 };

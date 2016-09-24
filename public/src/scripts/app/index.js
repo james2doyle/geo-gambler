@@ -52,15 +52,15 @@ function loadMap(locations) {
         'Error: Your browser doesn\'t support geolocation.');
     }
 
+    const mapMarkerClick = require('./map-marker-click');
+
     for (let i = 0; i < locations.length; i++) {
       let marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
         icon: '/img/dollar.svg',
         map: map
       }).addListener('click', function() {
-        map.panTo(this.getPosition());
-        infowindow.setContent(locations[i].title);
-        infowindow.open(map, this);
+        mapMarkerClick.call(this, infowindow, locations[i], map);
       });
     }
 
