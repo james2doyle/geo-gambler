@@ -1,5 +1,6 @@
 function loadMap(locations) {
   return new Promise(function(resolve, reject) {
+    const mapEl = document.getElementById('map');
     const map = new google.maps.Map(mapEl, {
       center: { lat: locations[0].latitude, lng: locations[0].longitude },
       zoom: 15,
