@@ -3,7 +3,7 @@
 const loadMap = require('./app');
 
 window.addEventListener('load', () => {
-  fetch('http://6c48ebbd.ngrok.io/location')
+  fetch('https://6c48ebbd.ngrok.io/location')
   .then(function(response) {
     return response.json();
   })
