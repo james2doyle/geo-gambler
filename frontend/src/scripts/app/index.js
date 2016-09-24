@@ -1,4 +1,4 @@
-function loadMap(mapEl, locations) {
+function loadMap(locations) {
   return new Promise(function(resolve, reject) {
     const map = new google.maps.Map(mapEl, {
       center: { lat: locations[0].latitude, lng: locations[0].longitude },
