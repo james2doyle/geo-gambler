@@ -1,0 +1,156 @@
+consumes:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+definitions:
+  Location:
+    description: Location media type (default view)
+    example:
+      game: numbers
+      latitude: 0.651153
+      longitude: 0.17247376
+      payout: 8.7673e+17
+      title: Ut rem error.
+    properties:
+      game:
+        enum:
+        - numbers
+        example: numbers
+        type: string
+      latitude:
+        example: 0.651153
+        format: double
+        type: number
+      longitude:
+        example: 0.17247376
+        format: double
+        type: number
+      payout:
+        example: 8.7673e+17
+        format: int64
+        type: integer
+      title:
+        example: Ut rem error.
+        type: string
+    title: 'Mediatype identifier: location; view=default'
+    type: object
+  LocationCollection:
+    description: LocationCollection is the media type for an array of Location (default
+      view)
+    example:
+    - game: numbers
+      latitude: 0.651153
+      longitude: 0.17247376
+      payout: 8.7673e+17
+      title: Ut rem error.
+    items:
+      $ref: '#/definitions/Location'
+    title: 'Mediatype identifier: location; type=collection'
+    type: array
+  Play:
+    example:
+      latitude: 0.8661024
+      longitude: 0.6970389
+      number: 1.6763414e+17
+    properties:
+      latitude:
+        example: 0.8661024
+        format: double
+        type: number
+      longitude:
+        example: 0.6970389
+        format: double
+        type: number
+      number:
+        example: 1.6763414e+17
+        format: int64
+        type: integer
+    required:
+    - latitude
+    - longitude
+    title: Play
+    type: object
+  Result:
+    description: Result media type (default view)
+    example:
+      detail: Ex ad.
+    properties:
+      detail:
+        example: Ex ad.
+        type: string
+    title: 'Mediatype identifier: result'
+    type: object
+host: localhost:8000
+info:
+  version: v1
+paths:
+  /locations:
+    get:
+      operationId: Locations#FindAll
+      parameters:
+      - enum:
+        - numbers
+        in: query
+        name: game
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/LocationCollection'
+      schemes:
+      - http
+      summary: FindAll Locations
+      tags:
+      - Locations
+  /locations/{id}:
+    get:
+      operationId: Locations#Get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Location'
+      schemes:
+      - http
+      summary: Get Locations
+      tags:
+      - Locations
+  /locations/play/{id}:
+    post:
+      operationId: Locations#Play
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: integer
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/Play'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Result'
+      schemes:
+      - http
+      summary: Play Locations
+      tags:
+      - Locations
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+schemes:
+- http
+swagger: "2.0"
