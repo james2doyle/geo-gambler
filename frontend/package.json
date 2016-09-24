@@ -1,11 +1,11 @@
 {
-  "name": "bassproject",
-  "version": "0.6.0",
+  "name": "geo-gambler",
+  "version": "0.0.1",
   "description": "A starting point for small sites",
   "homepage": "https://github.com/james2doyle/BassProject",
-  "repository": "bassproject",
+  "repository": "geo-gambler",
   "scripts": {
-    "server:dev": "browser-sync start --proxy \"BassProject.dev\" --files \"**/*.php, css/*.css, js/*.js\""
+    "server:dev": "browser-sync start --proxy \"https://geo-gambler.dev\" --files \"css/*.css, js/*.js\""
   },
   "author": {
     "name": "James Doyle",
