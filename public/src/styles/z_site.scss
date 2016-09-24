@@ -7,9 +7,9 @@ $normal: 400;
 $medium: 500;
 $bold: 700;
 
-$primary: #6699CC;
+$primary: #6894D1;
 $light: #ccc;
-$mid: #777;
+$mid: #565656;
 $dark: #333;
 
 $danger: #C93742;
@@ -203,7 +203,7 @@ body {
     margin: 0 0 10px;
     overflow: hidden;
     text-align: center;
-    color: #565656;
+    color: $mid;
     font-family: Roboto, Arial, sans-serif;
     user-select: none;
     font-size: 11px;
@@ -214,6 +214,34 @@ body {
     box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
     div {
       display: inline;
+    }
+  }
+}
+
+.on-map-marker {
+  width: 200px;
+  div {
+    width: 100%;
+    display: inline-block;
+  }
+  button {
+    margin-top: 5px;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    font-family: Roboto, Arial, sans-serif;
+    user-select: none;
+    font-size: 11px;
+    padding: 8px 16px;
+    border-radius: 2px;
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    border: none;
+    background-color: $primary;
+    outline: none;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: darken($primary, 5%);
     }
   }
 }

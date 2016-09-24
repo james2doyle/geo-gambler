@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
     return updateUi(locations).then(loadMap);
   })
   .then(map => {
-    // console.log('loaded ', map);
+    window.btnEvents = require('./ui/window-events')();
     document.body.classList.add('loaded');
   }, err => {
     console.log(err);

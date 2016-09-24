@@ -2,10 +2,6 @@ function loadMap(locations) {
   return new Promise((resolve, reject) => {
     const mapEl = document.getElementById('map');
     const map = new google.maps.Map(mapEl, {
-      // center: {
-      //   lat: locations[0].latitude,
-      //   lng: locations[0].longitude
-      // },
       zoom: 15,
       scrollwheel: false
     });
@@ -18,6 +14,8 @@ function loadMap(locations) {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+
+        map.setCenter(pos);
 
         const myMarker = new google.maps.Marker({
           position: pos,
@@ -34,7 +32,6 @@ function loadMap(locations) {
           };
         })(myMarker, 100));
 
-        map.setCenter(pos);
         map.panTo(myMarker.getPosition());
         map.setZoom(17);
         document.body.classList.add('my-location-loaded');
@@ -54,15 +51,15 @@ function loadMap(locations) {
 
     const mapMarkerClick = require('./map-marker-click');
 
-    for (let i = 0; i < locations.length; i++) {
+    locations.forEach(location => {
       let marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
+        position: new google.maps.LatLng(location.latitude, location.longitude),
         icon: '/img/dollar.svg',
         map: map
       }).addListener('click', function() {
-        mapMarkerClick.call(this, infowindow, locations[i], map);
+        mapMarkerClick.call(this, infowindow, location, map);
       });
-    }
+    });
 
     resolve(map);
   });
