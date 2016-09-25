@@ -22,3 +22,11 @@ module.exports.setUsername = function (name) {
 module.exports.getUsername = function () {
   return window.localStorage.getItem('playerUsername');
 };
+
+module.exports.setWallet = function (wallet) {
+  window.localStorage.setItem('playerWallet', wallet);
+};
+
+module.exports.getWallet = function () {
+  return window.localStorage.getItem('playerWallet');
+};

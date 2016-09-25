@@ -5,6 +5,7 @@ function updateUserDetails(locations, res) {
   username.innerHTML = res.name;
   const credits = document.getElementById('credits');
   credits.innerHTML = res.credit;
+  storage.setWallet(res.credit);
   const locationCount = document.getElementById('location-count');
   locationCount.innerHTML = locations.length;
 }
