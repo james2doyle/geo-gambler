@@ -2,6 +2,11 @@ const storage = require('../app/storage');
 
 function updateUi(locations) {
   return new Promise((resolve, reject) => {
+    var username = storage.getUsername();
+    if (!username) {
+      username = prompt('Enter a username to continue:');
+      storage.setUsername(username);
+    }
     fetch('https://geo.ohdoylerules.com/api/user', {
       method: 'post',
       headers: {
@@ -9,7 +14,7 @@ function updateUi(locations) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: 'James'
+        name: username
       })
     }).then((res) => {
       return res.json();
@@ -18,7 +23,7 @@ function updateUi(locations) {
       const username = document.getElementById('username');
       username.innerHTML = res.name;
       const credits = document.getElementById('credits');
-      username.innerHTML = res.credit;
+      credits.innerHTML = res.credit;
       const locationCount = document.getElementById('location-count');
       locationCount.innerHTML = locations.length;
       resolve(locations);
