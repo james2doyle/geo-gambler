@@ -15,6 +15,7 @@ import (
 func main() {
 	// Create service
 	service := goa.New("GeoGambler")
+	service.WithLogger(nil)
 
 	// Mount middleware
 	service.Use(middleware.RequestID())

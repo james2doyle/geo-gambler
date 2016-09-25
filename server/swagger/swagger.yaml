@@ -110,25 +110,13 @@ definitions:
     type: array
   Play:
     example:
-      latitude: 0.6371645
-      longitude: 0.31120762
-      number: 6.703411e+18
+      number: 5.876805e+18
     properties:
-      latitude:
-        example: 0.6371645
-        format: double
-        type: number
-      longitude:
-        example: 0.31120762
-        format: double
-        type: number
       number:
-        example: 6.703411e+18
+        example: 5.876805e+18
         format: int64
         type: integer
     required:
-    - latitude
-    - longitude
     - number
     title: Play
     type: object

@@ -137,9 +137,7 @@ Payload example:
 Payload example:
 
 {
-   "latitude": 0.6371644754167506,
-   "longitude": 0.31120761114303847,
-   "number": 6703411411122631036
+   "number": 5876805005436099547
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
