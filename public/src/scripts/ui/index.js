@@ -21,6 +21,7 @@ function updateUi(locations) {
         resolve(locations);
       }).catch((err) => {
         console.error(err);
+        window.localStorage.clear();
       });
       return;
     }
