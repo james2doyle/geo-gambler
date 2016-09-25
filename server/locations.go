@@ -100,7 +100,7 @@ func canPlayWithDistance(latUser, longUser *float64, latLoc, longLoc float64) (b
 	}
 
 	dist := distance(*latUser, *longUser, latLoc, longLoc) * 1000
-	return dist <= 20.0, dist
+	return dist <= 50.0, dist
 }
 
 func distance(latUser, longUser, latLoc, longLoc float64) (distKM float64) {
