@@ -56,6 +56,8 @@ module.exports = function() {
         document.getElementById('on-map-maker').innerHTML = renderMarkerTemplate(res.location);
       }).catch(function(err) {
         console.error(err);
+        window.localStorage.clear();
+        window.location.reload();
       });
     }
   };
