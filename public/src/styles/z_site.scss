@@ -224,22 +224,27 @@ body {
     width: 100%;
     display: inline-block;
   }
-  button {
+  input, button {
+    color: $mid;
     margin-top: 5px;
     overflow: hidden;
-    color: #fff;
     text-align: center;
     font-family: Roboto, Arial, sans-serif;
-    user-select: none;
     font-size: 11px;
-    padding: 8px 16px;
     border-radius: 2px;
     background-clip: padding-box;
+    border: 1px solid #ccc;
+    padding: 7px;
     box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+  }
+  button {
+    color: #fff;
+    user-select: none;
     border: none;
     background-color: $primary;
     outline: none;
     transition: all 0.2s ease;
+    padding: 8px 16px;
     &:hover {
       background-color: darken($primary, 5%);
     }

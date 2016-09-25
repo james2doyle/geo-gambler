@@ -12,7 +12,7 @@ module.exports = function() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          number: 5
+          number: parseInt(document.getElementById('number').value, 10)
         })
       }).then((response) => {
         return response.json();
