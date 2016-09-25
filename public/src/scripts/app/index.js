@@ -2,7 +2,7 @@ function loadMap(locations) {
   return new Promise((resolve, reject) => {
     const mapEl = document.getElementById('map');
     const map = new google.maps.Map(mapEl, {
-      zoom: 15,
+      zoom: 17,
       scrollwheel: false
     });
 
