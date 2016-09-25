@@ -1,7 +1,7 @@
 module.exports = function() {
   const btnEvents = {
-    handlePlayClick: function(btn) {
-      console.log(btn);
+    handlePlayClick: function(locationId) {
+      console.log(locationId);
     }
   };
 
