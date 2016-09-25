@@ -2,11 +2,6 @@ const storage = require('../app/storage');
 const renderMarkerTemplate = require('../ui/render-marker-template');
 const updateModal = require('../ui/update-modal');
 
-function getLocation(id) {
-  var pos = storage.getLocation();
-  return fetch(`https://geo.ohdoylerules.com/api/location/${id}?lat=${pos.lat}&long=${pos.lng}`);
-}
-
 module.exports = function() {
   const btnEvents = {
     increaseNumber: function() {
@@ -53,18 +48,8 @@ module.exports = function() {
       }).then((response) => {
         return response.json();
       }).then((res) => {
-        console.log(res);
-        getLocation(id)
-        .then((response) => {
-          return response.json();
-        })
-        .then((location) => {
-          updateModal(location.id);
-          document.getElementById('on-map-maker').innerHTML = renderMarkerTemplate(location);
-        })
-        .catch(function(err) {
-          console.error(err);
-        });
+        updateModal(res, true);
+        document.getElementById('on-map-maker').innerHTML = renderMarkerTemplate(res.location);
       }).catch(function(err) {
         console.error(err);
       });
