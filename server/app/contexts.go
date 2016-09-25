@@ -175,8 +175,8 @@ func NewPlayLocationsContext(ctx context.Context, service *goa.Service) (*PlayLo
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *PlayLocationsContext) OK(r *Result) error {
-	ctx.ResponseData.Header().Set("Content-Type", "result")
+func (ctx *PlayLocationsContext) OK(r *Playresult) error {
+	ctx.ResponseData.Header().Set("Content-Type", "playresult")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 

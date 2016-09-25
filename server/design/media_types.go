@@ -36,13 +36,21 @@ var Location = MediaType("Location", func() {
 	})
 })
 
-var Result = MediaType("Result", func() {
+var PlayResult = MediaType("PlayResult", func() {
 	Attributes(func() {
 		Attribute("detail", String)
-		Required("detail")
+		Attribute("status", Boolean)
+		Attribute("won", Boolean)
+		Attribute("user", User)
+		Attribute("location", Location)
+		Required("detail", "status", "won", "user", "location")
 	})
 	View("default", func() {
 		Attribute("detail")
+		Attribute("status")
+		Attribute("won")
+		Attribute("user")
+		Attribute("location")
 	})
 })
 

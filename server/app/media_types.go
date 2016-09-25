@@ -87,19 +87,39 @@ func (mt LocationCollection) Validate() (err error) {
 	return
 }
 
-// Result media type (default view)
+// Playresult media type (default view)
 //
-// Identifier: result; view=default
-type Result struct {
-	Detail string `form:"detail" json:"detail" xml:"detail"`
+// Identifier: playresult; view=default
+type Playresult struct {
+	Detail   string    `form:"detail" json:"detail" xml:"detail"`
+	Location *Location `form:"location" json:"location" xml:"location"`
+	Status   bool      `form:"status" json:"status" xml:"status"`
+	User     *User     `form:"user" json:"user" xml:"user"`
+	Won      bool      `form:"won" json:"won" xml:"won"`
 }
 
-// Validate validates the Result media type instance.
-func (mt *Result) Validate() (err error) {
+// Validate validates the Playresult media type instance.
+func (mt *Playresult) Validate() (err error) {
 	if mt.Detail == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "detail"))
 	}
+	if mt.User == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "user"))
+	}
+	if mt.Location == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "location"))
+	}
 
+	if mt.Location != nil {
+		if err2 := mt.Location.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
+	}
+	if mt.User != nil {
+		if err2 := mt.User.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
+	}
 	return
 }
 

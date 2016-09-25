@@ -47,7 +47,7 @@ var _ = Resource("Locations", func() {
 			Required("lat", "long")
 		})
 		Payload(Play)
-		Response(OK, Result)
+		Response(OK, PlayResult)
 		Response(NotFound, Error)
 		Response(Unauthorized, Error)
 	})
