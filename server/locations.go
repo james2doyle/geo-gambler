@@ -62,9 +62,9 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 	}
 
 	location := Locations[ctx.ID]
-	km := distance(ctx.Lat, ctx.Long, location.Latitude, location.Longitude)
+	canPlay, _ := canPlayWithDistance(&ctx.Lat, &ctx.Long, location.Latitude, location.Longitude)
 
-	if km >= 0.01 {
+	if !canPlay {
 		res := &app.Result{
 			Detail: "You Are Too Far Away",
 		}
@@ -99,8 +99,8 @@ func canPlayWithDistance(latUser, longUser *float64, latLoc, longLoc float64) (b
 		return false, -1.0
 	}
 
-	dist := distance(*latUser, *longUser, latLoc, longLoc)
-	return dist <= 0.01, dist
+	dist := distance(*latUser, *longUser, latLoc, longLoc) * 1000
+	return dist <= 20.0, dist
 }
 
 func distance(latUser, longUser, latLoc, longLoc float64) (distKM float64) {
