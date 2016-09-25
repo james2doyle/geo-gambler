@@ -137,7 +137,8 @@ Payload example:
 Payload example:
 
 {
-   "number": 5114884648824938968
+   "bet": 18,
+   "number": 4
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}

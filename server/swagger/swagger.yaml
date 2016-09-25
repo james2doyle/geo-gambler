@@ -110,14 +110,21 @@ definitions:
     type: array
   Play:
     example:
-      number: 5.1148847e+18
+      bet: 18
+      number: 4
     properties:
+      bet:
+        example: 18
+        minimum: 10
+        type: integer
       number:
-        example: 5.1148847e+18
-        format: int64
+        example: 4
+        maximum: 9
+        minimum: 0
         type: integer
     required:
     - number
+    - bet
     title: Play
     type: object
   Playresult:

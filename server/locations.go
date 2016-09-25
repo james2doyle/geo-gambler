@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 
@@ -66,7 +67,21 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 
 	if !canPlay {
 		res := &app.Playresult{
-			Detail:   "You Are Too Far Away",
+			Detail:   "You are too far away to play at this location",
+			Status:   false,
+			Won:      false,
+			User:     user,
+			Location: location,
+		}
+		return ctx.OK(res)
+	}
+
+	betAmount := ctx.Payload.Bet
+	winAmount := betAmount + betAmount/10
+
+	if winAmount > location.Wallet {
+		res := &app.Playresult{
+			Detail:   "Not enough winnings for you to play at this location",
 			Status:   false,
 			Won:      false,
 			User:     user,
@@ -77,10 +92,10 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 
 	number := rand.Int31n(10)
 	if int(number) != ctx.Payload.Number {
-		*user.Credit -= 10
-		location.Wallet += 10
+		*user.Credit -= betAmount
+		location.Wallet += betAmount
 		res := &app.Playresult{
-			Detail:   "You Lost 10 tokens",
+			Detail:   fmt.Sprintf("You lost %d tokens", betAmount),
 			Status:   true,
 			Won:      false,
 			User:     user,
@@ -89,15 +104,15 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 		return ctx.OK(res)
 	}
 
-	*user.Credit += 10
-	location.Wallet -= 10
+	*user.Credit += winAmount
+	location.Wallet -= winAmount
 
 	if location.Wallet == 0 {
 		location.Wallet = 10
 	}
 
 	res := &app.Playresult{
-		Detail:   "You Won 10 tokens",
+		Detail:   fmt.Sprintf("You won %d tokens", winAmount),
 		Status:   true,
 		Won:      true,
 		User:     user,

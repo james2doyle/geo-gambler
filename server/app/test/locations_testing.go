@@ -300,6 +300,19 @@ func PlayLocationsNotFound(t goatest.TInterface, ctx context.Context, service *g
 		service.Encoder.Register(newEncoder, "*/*")
 	}
 
+	// Validate payload
+	err := payload.Validate()
+	if err != nil {
+		e, ok := err.(goa.ServiceError)
+		if !ok {
+			panic(err) // bug
+		}
+		if e.ResponseStatus() != 404 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return nil, nil
+	}
+
 	// Setup request context
 	rw := httptest.NewRecorder()
 	query := url.Values{}
@@ -388,6 +401,19 @@ func PlayLocationsOK(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		service.Encoder.Register(newEncoder, "*/*")
 	}
 
+	// Validate payload
+	err := payload.Validate()
+	if err != nil {
+		e, ok := err.(goa.ServiceError)
+		if !ok {
+			panic(err) // bug
+		}
+		if e.ResponseStatus() != 200 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return nil, nil
+	}
+
 	// Setup request context
 	rw := httptest.NewRecorder()
 	query := url.Values{}
@@ -474,6 +500,19 @@ func PlayLocationsUnauthorized(t goatest.TInterface, ctx context.Context, servic
 		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
 		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
 		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Validate payload
+	err := payload.Validate()
+	if err != nil {
+		e, ok := err.(goa.ServiceError)
+		if !ok {
+			panic(err) // bug
+		}
+		if e.ResponseStatus() != 401 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return nil, nil
 	}
 
 	// Setup request context
