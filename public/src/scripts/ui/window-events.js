@@ -4,7 +4,8 @@ module.exports = function() {
   const btnEvents = {
     handlePlayClick: function(id) {
       var pos = storage.getLocation();
-      fetch(`https://geo.ohdoylerules.com/api/location/play/${id}?lat=${pos.lat}&long=${pos.lng}`, {
+      var auth = storage.getApiKey();
+      fetch(`https://geo.ohdoylerules.com/api/location/play/${id}?lat=${pos.lat}&long=${pos.lng}&auth=${auth}`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
