@@ -270,7 +270,7 @@ body.game-overlay-on {
   left: 2.5%;
   z-index: 2;
   width: 95%;
-  height: 50vh;
+  min-height: 50vh;
   background: #fff;
   padding: 8px 16px;
   font-family: Roboto, Arial, sans-serif;
