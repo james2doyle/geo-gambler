@@ -11,7 +11,10 @@ function markerTemplate(location) {
     <div><small>${distance}</small></div>
     <div><small>${location.wallet} Credits Jackpot</small></div>
     <div><small>Odds: <em>1 in 10</em></small></div>
-    <div><button type="button" onclick="btnEvents.handlePlayClick(${location.id})">Play!</button></div>
+    <div>
+      <input type="number" name="number" id="number" value="1" min="1" max="10" />
+      <button type="button" onclick="btnEvents.handlePlayClick(${location.id})">Play!</button>
+    </div>
   </div>`;
 }
 
