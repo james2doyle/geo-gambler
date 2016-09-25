@@ -58,8 +58,8 @@ func MountLocationsController(service *goa.Service, ctrl LocationsController) {
 		}
 		return ctrl.FindAll(rctx)
 	}
-	service.Mux.Handle("GET", "/locations", ctrl.MuxHandler("FindAll", h, nil))
-	service.LogInfo("mount", "ctrl", "Locations", "action", "FindAll", "route", "GET /locations")
+	service.Mux.Handle("GET", "/location", ctrl.MuxHandler("FindAll", h, nil))
+	service.LogInfo("mount", "ctrl", "Locations", "action", "FindAll", "route", "GET /location")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -73,8 +73,8 @@ func MountLocationsController(service *goa.Service, ctrl LocationsController) {
 		}
 		return ctrl.Get(rctx)
 	}
-	service.Mux.Handle("GET", "/locations/:id", ctrl.MuxHandler("Get", h, nil))
-	service.LogInfo("mount", "ctrl", "Locations", "action", "Get", "route", "GET /locations/:id")
+	service.Mux.Handle("GET", "/location/:id", ctrl.MuxHandler("Get", h, nil))
+	service.LogInfo("mount", "ctrl", "Locations", "action", "Get", "route", "GET /location/:id")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -94,14 +94,115 @@ func MountLocationsController(service *goa.Service, ctrl LocationsController) {
 		}
 		return ctrl.Play(rctx)
 	}
-	service.Mux.Handle("POST", "/locations/play/:id", ctrl.MuxHandler("Play", h, unmarshalPlayLocationsPayload))
-	service.LogInfo("mount", "ctrl", "Locations", "action", "Play", "route", "POST /locations/play/:id")
+	service.Mux.Handle("POST", "/location/play/:id", ctrl.MuxHandler("Play", h, unmarshalPlayLocationsPayload))
+	service.LogInfo("mount", "ctrl", "Locations", "action", "Play", "route", "POST /location/play/:id")
 }
 
 // unmarshalPlayLocationsPayload unmarshals the request body into the context request data Payload field.
 func unmarshalPlayLocationsPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
 	payload := &play{}
 	if err := service.DecodeRequest(req, payload); err != nil {
+		return err
+	}
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
+	return nil
+}
+
+// UsersController is the controller interface for the Users actions.
+type UsersController interface {
+	goa.Muxer
+	Create(*CreateUsersContext) error
+	Get(*GetUsersContext) error
+	Update(*UpdateUsersContext) error
+}
+
+// MountUsersController "mounts" a Users resource controller on the given service.
+func MountUsersController(service *goa.Service, ctrl UsersController) {
+	initService(service)
+	var h goa.Handler
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewCreateUsersContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		// Build the payload
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
+			rctx.Payload = rawPayload.(*CreateUsersPayload)
+		} else {
+			return goa.MissingPayloadError()
+		}
+		return ctrl.Create(rctx)
+	}
+	service.Mux.Handle("POST", "/user", ctrl.MuxHandler("Create", h, unmarshalCreateUsersPayload))
+	service.LogInfo("mount", "ctrl", "Users", "action", "Create", "route", "POST /user")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewGetUsersContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.Get(rctx)
+	}
+	service.Mux.Handle("GET", "/user/me", ctrl.MuxHandler("Get", h, nil))
+	service.LogInfo("mount", "ctrl", "Users", "action", "Get", "route", "GET /user/me")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewUpdateUsersContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		// Build the payload
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
+			rctx.Payload = rawPayload.(*UpdateUsersPayload)
+		} else {
+			return goa.MissingPayloadError()
+		}
+		return ctrl.Update(rctx)
+	}
+	service.Mux.Handle("POST", "/user/me", ctrl.MuxHandler("Update", h, unmarshalUpdateUsersPayload))
+	service.LogInfo("mount", "ctrl", "Users", "action", "Update", "route", "POST /user/me")
+}
+
+// unmarshalCreateUsersPayload unmarshals the request body into the context request data Payload field.
+func unmarshalCreateUsersPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
+	payload := &createUsersPayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
+		return err
+	}
+	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
+		return err
+	}
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
+	return nil
+}
+
+// unmarshalUpdateUsersPayload unmarshals the request body into the context request data Payload field.
+func unmarshalUpdateUsersPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
+	payload := &updateUsersPayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
+		return err
+	}
+	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
 		return err
 	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()

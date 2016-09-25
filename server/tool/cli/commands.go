@@ -26,6 +26,8 @@ type (
 	// GetLocationsCommand is the command line data structure for the Get action of Locations
 	GetLocationsCommand struct {
 		ID          int
+		Lat         string
+		Long        string
 		PrettyPrint bool
 	}
 
@@ -34,6 +36,27 @@ type (
 		Payload     string
 		ContentType string
 		ID          int
+		Lat         string
+		Long        string
+		PrettyPrint bool
+	}
+
+	// CreateUsersCommand is the command line data structure for the Create action of Users
+	CreateUsersCommand struct {
+		Payload     string
+		ContentType string
+		PrettyPrint bool
+	}
+
+	// GetUsersCommand is the command line data structure for the Get action of Users
+	GetUsersCommand struct {
+		PrettyPrint bool
+	}
+
+	// UpdateUsersCommand is the command line data structure for the Update action of Users
+	UpdateUsersCommand struct {
+		Payload     string
+		ContentType string
 		PrettyPrint bool
 	}
 )
@@ -42,26 +65,35 @@ type (
 func RegisterCommands(app *cobra.Command, c *client.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
-		Use:   "findAll",
+		Use:   "create",
 		Short: ``,
 	}
-	tmp1 := new(FindAllLocationsCommand)
+	tmp1 := new(CreateUsersCommand)
 	sub = &cobra.Command{
-		Use:   `Locations ["/locations"]`,
+		Use:   `Users ["/user"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
+		Long: `
+
+Payload example:
+
+{
+   "credit": 2,
+   "id": "5d523e63-a106-bbbb-f3af-11d72e8e2a5c",
+   "name": "Dolore tempora."
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
 	tmp1.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp1.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "get",
+		Use:   "findAll",
 		Short: ``,
 	}
-	tmp2 := new(GetLocationsCommand)
+	tmp2 := new(FindAllLocationsCommand)
 	sub = &cobra.Command{
-		Use:   `Locations ["/locations/ID"]`,
+		Use:   `Locations ["/location"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
@@ -70,26 +102,72 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
+		Use:   "get",
+		Short: `get action`,
+	}
+	tmp3 := new(GetLocationsCommand)
+	sub = &cobra.Command{
+		Use:   `Locations ["/location/ID"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
+	}
+	tmp3.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp3.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	tmp4 := new(GetUsersCommand)
+	sub = &cobra.Command{
+		Use:   `Users ["/user/me"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
+	}
+	tmp4.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp4.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
 		Use:   "play",
 		Short: ``,
 	}
-	tmp3 := new(PlayLocationsCommand)
+	tmp5 := new(PlayLocationsCommand)
 	sub = &cobra.Command{
-		Use:   `Locations ["/locations/play/ID"]`,
+		Use:   `Locations ["/location/play/ID"]`,
 		Short: ``,
 		Long: `
 
 Payload example:
 
 {
-   "latitude": 0.8661023947224157,
-   "longitude": 0.6970389155669026,
-   "number": 167634141177076272
+   "latitude": 0.6371644754167506,
+   "longitude": 0.31120761114303847,
+   "number": 6703411411122631036
 }`,
-		RunE: func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
-	tmp3.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp3.PrettyPrint, "pp", false, "Pretty print response body")
+	tmp5.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp5.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "update",
+		Short: ``,
+	}
+	tmp6 := new(UpdateUsersCommand)
+	sub = &cobra.Command{
+		Use:   `Users ["/user/me"]`,
+		Short: ``,
+		Long: `
+
+Payload example:
+
+{
+   "credit": 2,
+   "id": "5d523e63-a106-bbbb-f3af-11d72e8e2a5c",
+   "name": "Dolore tempora."
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
+	}
+	tmp6.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp6.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 }
@@ -253,7 +331,7 @@ func (cmd *FindAllLocationsCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/locations"
+		path = "/location"
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -279,11 +357,21 @@ func (cmd *GetLocationsCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/locations/%v", cmd.ID)
+		path = fmt.Sprintf("/location/%v", cmd.ID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.GetLocations(ctx, path)
+	tmp7, err := float64Val(cmd.Lat)
+	if err != nil {
+		goa.LogError(ctx, "argument parse failed", "err", err)
+		return err
+	}
+	tmp8, err := float64Val(cmd.Long)
+	if err != nil {
+		goa.LogError(ctx, "argument parse failed", "err", err)
+		return err
+	}
+	resp, err := c.GetLocations(ctx, path, tmp7, tmp8)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -297,6 +385,10 @@ func (cmd *GetLocationsCommand) Run(c *client.Client, args []string) error {
 func (cmd *GetLocationsCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var id int
 	cc.Flags().IntVar(&cmd.ID, "id", id, ``)
+	var lat string
+	cc.Flags().StringVar(&cmd.Lat, "lat", lat, ``)
+	var long string
+	cc.Flags().StringVar(&cmd.Long, "long", long, ``)
 }
 
 // Run makes the HTTP request corresponding to the PlayLocationsCommand command.
@@ -305,7 +397,7 @@ func (cmd *PlayLocationsCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/locations/play/%v", cmd.ID)
+		path = fmt.Sprintf("/location/play/%v", cmd.ID)
 	}
 	var payload client.Play
 	if cmd.Payload != "" {
@@ -316,7 +408,17 @@ func (cmd *PlayLocationsCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.PlayLocations(ctx, path, &payload, cmd.ContentType)
+	tmp9, err := float64Val(cmd.Lat)
+	if err != nil {
+		goa.LogError(ctx, "argument parse failed", "err", err)
+		return err
+	}
+	tmp10, err := float64Val(cmd.Long)
+	if err != nil {
+		goa.LogError(ctx, "argument parse failed", "err", err)
+		return err
+	}
+	resp, err := c.PlayLocations(ctx, path, &payload, *tmp9, *tmp10, cmd.ContentType)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -332,4 +434,98 @@ func (cmd *PlayLocationsCommand) RegisterFlags(cc *cobra.Command, c *client.Clie
 	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 	var id int
 	cc.Flags().IntVar(&cmd.ID, "id", id, ``)
+	var lat string
+	cc.Flags().StringVar(&cmd.Lat, "lat", lat, ``)
+	var long string
+	cc.Flags().StringVar(&cmd.Long, "long", long, ``)
+}
+
+// Run makes the HTTP request corresponding to the CreateUsersCommand command.
+func (cmd *CreateUsersCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/user"
+	}
+	var payload client.CreateUsersPayload
+	if cmd.Payload != "" {
+		err := json.Unmarshal([]byte(cmd.Payload), &payload)
+		if err != nil {
+			return fmt.Errorf("failed to deserialize payload: %s", err)
+		}
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.CreateUsers(ctx, path, &payload, cmd.ContentType)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *CreateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
+}
+
+// Run makes the HTTP request corresponding to the GetUsersCommand command.
+func (cmd *GetUsersCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/user/me"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.GetUsers(ctx, path)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *GetUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+}
+
+// Run makes the HTTP request corresponding to the UpdateUsersCommand command.
+func (cmd *UpdateUsersCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/user/me"
+	}
+	var payload client.UpdateUsersPayload
+	if cmd.Payload != "" {
+		err := json.Unmarshal([]byte(cmd.Payload), &payload)
+		if err != nil {
+			return fmt.Errorf("failed to deserialize payload: %s", err)
+		}
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.UpdateUsers(ctx, path, &payload, cmd.ContentType)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *UpdateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 }

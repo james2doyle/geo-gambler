@@ -29,6 +29,9 @@ func (ut *play) Validate() (err error) {
 	if ut.Longitude == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "longitude"))
 	}
+	if ut.Number == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "number"))
+	}
 
 	return
 }
@@ -43,7 +46,7 @@ func (ut *play) Publicize() *Play {
 		pub.Longitude = *ut.Longitude
 	}
 	if ut.Number != nil {
-		pub.Number = ut.Number
+		pub.Number = *ut.Number
 	}
 	return &pub
 }
@@ -52,5 +55,5 @@ func (ut *play) Publicize() *Play {
 type Play struct {
 	Latitude  float64 `form:"latitude" json:"latitude" xml:"latitude"`
 	Longitude float64 `form:"longitude" json:"longitude" xml:"longitude"`
-	Number    *int    `form:"number,omitempty" json:"number,omitempty" xml:"number,omitempty"`
+	Number    int     `form:"number" json:"number" xml:"number"`
 }
