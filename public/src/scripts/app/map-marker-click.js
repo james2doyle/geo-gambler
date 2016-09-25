@@ -1,11 +1,16 @@
 const storage = require('../app/storage');
 
 function markerTemplate(location) {
+  const walkTime = Math.round((location.distance * 2) / 60);
+  let distance = `Less than 1 minute away.`;
+  if (walkTime > 1) {
+    distance = `${walkTime} minutes away.`;
+  }
   return `<div class="on-map-marker">
     <h4>${location.title}</h4>
-    <div><small>${Math.round(location.distance)}m away</small></div>
-    <div><small>${location.wallet} Credit Jackpot</small></div>
-    <div><small>Expires in 22 mins</small></div>
+    <div><small>${distance}</small></div>
+    <div><small>${location.wallet} Credits Jackpot</small></div>
+    <div><small>Odds: <em>1 in 10</em></small></div>
     <div><button type="button" onclick="btnEvents.handlePlayClick(${location.id})">Play!</button></div>
   </div>`;
 }
