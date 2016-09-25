@@ -4,17 +4,19 @@ const updateModal = require('../ui/update-modal');
 
 module.exports = function() {
   const btnEvents = {
-    increaseNumber: function() {
-      let el = document.getElementById('number');
+    increaseNumber: function(id) {
+      let el = document.getElementById(id);
       let number = parseInt(el.value, 10);
-      if (number < el.max) {
+      if (!el.max) {
+        el.value = (number + 1) + "";
+      } else if (number < el.max) {
         // make a string so the input updates
         el.value = (number + 1) + "";
       }
     },
 
-    decreaseNumber: function() {
-      let el = document.getElementById('number');
+    decreaseNumber: function(id) {
+      let el = document.getElementById(id);
       let number = parseInt(el.value, 10);
       if (number > el.min) {
         // make a string so the input updates
@@ -36,6 +38,7 @@ module.exports = function() {
       const pos = storage.getLocation();
       const auth = storage.getApiKey();
       const number = parseInt(document.getElementById('number').value, 10);
+      const bet = parseInt(document.getElementById('bet').value, 10);
       fetch(`https://geo.ohdoylerules.com/api/location/play/${id}?lat=${pos.lat}&long=${pos.lng}&auth=${auth}`, {
         method: 'post',
         headers: {
@@ -44,6 +47,7 @@ module.exports = function() {
         },
         body: JSON.stringify({
           number,
+          bet,
         })
       }).then((response) => {
         return response.json();

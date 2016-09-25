@@ -25,9 +25,14 @@
       </div>
       <div id="game-message"></div>
       <div class="number-group">
+        <input type="number" name="bet" id="bet" value="10" min="10" />
+        <button type="button" class="btn default" onclick="btnEvents.increaseNumber('bet')">&plus;</button>
+        <button type="button" class="btn default" onclick="btnEvents.decreaseNumber('bet')">&minus;</button>
+      </div>
+      <div class="number-group">
         <input type="number" name="number" id="number" value="1" min="1" max="10" />
-        <button type="button" class="btn default" onclick="btnEvents.increaseNumber()">&plus;</button>
-        <button type="button" class="btn default" onclick="btnEvents.decreaseNumber()">&minus;</button>
+        <button type="button" class="btn default" onclick="btnEvents.increaseNumber('number')">&plus;</button>
+        <button type="button" class="btn default" onclick="btnEvents.decreaseNumber('number')">&minus;</button>
         <button type="button" id="submit-modal" class="btn success" onclick="btnEvents.handlePlayClick(this)" data-id="">Play!</button>
       </div>
     </form>
