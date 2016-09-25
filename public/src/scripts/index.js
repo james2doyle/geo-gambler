@@ -5,7 +5,7 @@ const updateMarkers = require('./app/update-markers');
 const updateUi = require('./ui');
 
 window.addEventListener('load', () => {
-  fetch('https://6c48ebbd.ngrok.io/location')
+  fetch('https://geo.ohdoylerules.com/api/location')
   .then((response) => {
     return response.json();
   })

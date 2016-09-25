@@ -16,7 +16,9 @@ function loadMap(locations) {
         position: pos,
         icon: '/img/marker.svg',
         map: map
-      }).addListener('click', function() {
+      })
+
+      myMarker.addListener('click', function() {
         infowindow.setContent("Your Location");
         infowindow.open(map, this);
         map.panTo(this.getPosition());
@@ -32,7 +34,8 @@ function loadMap(locations) {
 
     resolve({
       map,
-      locations
+      locations,
+      infowindow
     });
   });
 }
