@@ -79,6 +79,17 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 	betAmount := ctx.Payload.Bet
 	winAmount := betAmount + betAmount/10
 
+	if betAmount > *user.Credit {
+		res := &app.Playresult{
+			Detail:   "Not enough credit in your wallet",
+			Status:   false,
+			Won:      false,
+			User:     user,
+			Location: location,
+		}
+		return ctx.OK(res)
+	}
+
 	if winAmount > location.Wallet {
 		res := &app.Playresult{
 			Detail:   "Not enough winnings for you to play at this location",
