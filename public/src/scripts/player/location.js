@@ -4,7 +4,7 @@ module.exports = function() {
   return new Promise((resolve, reject) => {
     if (window.navigator.geolocation) {
       window.navigator.geolocation.watchPosition((position) => {
-      // window.navigator.geolocation.getCurrentPosition((position) {
+        // window.navigator.geolocation.getCurrentPosition((position) {
         const pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
