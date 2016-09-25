@@ -1,4 +1,4 @@
 GEO GAMBLER
 ===========
 
-Google Maps API Key: `AIzaSyDlbT3m2bargZxriF1dwpENruIKkoNxXso`
+(Rallyteam Project)[https://hack.rallyteam.com/#/opportunities/51]
