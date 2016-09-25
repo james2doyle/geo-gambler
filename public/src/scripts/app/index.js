@@ -30,6 +30,7 @@ function loadMap(locations) {
     })
     .catch((err) => {
       console.error(err);
+      reject(err);
     });
 
     resolve({
