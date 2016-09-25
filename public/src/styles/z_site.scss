@@ -1,29 +1,5 @@
 @import "vars";
 
-$body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$heading-font: $body-font;
-
-$normal: 400;
-$medium: 500;
-$bold: 700;
-
-$primary: #6894D1;
-$light: #ccc;
-$mid: #565656;
-$dark: #333;
-
-$danger: #C93742;
-$success: #ACC23A;
-
-$sm: 37.5em;
-$md: 48em;
-$lg: 64em;
-$breakpoint-sm: '(min-width: #{$sm})' !default;
-$breakpoint-md: '(min-width: #{$md})' !default;
-$breakpoint-lg: '(min-width: #{$lg})' !default;
-
-$golden-rule: 1.6180339887498948420;
-
 :placeholder-shown {
   color: $mid;
   color: rgba(black,.5);
@@ -218,35 +194,147 @@ body {
   }
 }
 
+input, button {
+  color: $mid;
+  margin-top: 5px;
+  overflow: hidden;
+  text-align: center;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+  border-radius: 2px;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  padding: 7px;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+}
+
+button.btn {
+  color: #fff;
+  user-select: none;
+  border: none;
+  background-color: $primary;
+  outline: none;
+  transition: all 0.2s ease;
+  padding: 8px 16px;
+  border: 1px solid rgba(0,0,0,0);
+  &:hover {
+    background-color: darken($primary, 5%);
+  }
+  &.success {
+    background-color: $success;
+    &:hover {
+      background-color: darken($success, 5%);
+    }
+  }
+  &.default {
+    color: black;
+    border: 1px solid #ccc;
+    background-color: white;
+    &:hover {
+      background-color: darken(white, 5%);
+    }
+  }
+}
+
 .on-map-marker {
   width: 200px;
   div {
     width: 100%;
     display: inline-block;
   }
-  input, button {
-    color: $mid;
-    margin-top: 5px;
-    overflow: hidden;
-    text-align: center;
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 11px;
-    border-radius: 2px;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    padding: 7px;
-    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+}
+
+body.game-overlay-on {
+  .game-overlay {
+    display: block;
   }
-  button {
-    color: #fff;
-    user-select: none;
+  &:before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+  }
+}
+
+.game-overlay {
+  display: none;
+  position: fixed;
+  top: 15%;
+  left: 2.5%;
+  z-index: 2;
+  width: 95%;
+  min-height: 50vh;
+  background: #fff;
+  padding: 8px 16px;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+  transition: all 0.2s ease;
+  input, button {
+    font-size: 16px;
+  }
+  button.btn {
+    padding: 7px 16px;
+  }
+  .close-overlay {
+    color: $mid;
+    float: right;
+    font-size: 1.5rem;
+    line-height: 1;
     border: none;
-    background-color: $primary;
-    outline: none;
+    outline: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    box-shadow: none;
     transition: all 0.2s ease;
-    padding: 8px 16px;
     &:hover {
-      background-color: darken($primary, 5%);
+      color: black;
+    }
+  }
+}
+
+.message {
+  color: white;
+  margin-top: 10px;
+  padding: 8px 14px;
+  display: inline-block;
+  width: 100%;
+  font-size: 11px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+  &.win-message {
+    background-color: $primary;
+  }
+  &.loss-message {
+    background-color: $danger;
+  }
+}
+
+.number-group {
+  margin-top: 10px;
+  align-items: center;
+  display: flex;
+  & > * {
+    flex: 1;
+    margin: 0 5px 10px;
+    &:first-child {
+      margin: 0 5px 10px 0;
+    }
+    &:last-child {
+      margin: 0 0 10px 5px;
     }
   }
 }

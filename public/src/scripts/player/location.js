@@ -1,9 +1,10 @@
 const storage = require('../app/storage');
 
 module.exports = function() {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     if (window.navigator.geolocation) {
-      window.navigator.geolocation.getCurrentPosition(function(position) {
+      window.navigator.geolocation.watchPosition((position) => {
+      // window.navigator.geolocation.getCurrentPosition((position) {
         const pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -14,7 +15,7 @@ module.exports = function() {
 
         // send the position back
         resolve(pos);
-      }, function() {
+      }, () => {
         reject('Error: The Geolocation service failed.');
       }, {
         enableHighAccuracy: false, // high accuraccy can be slow
