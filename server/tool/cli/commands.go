@@ -78,8 +78,8 @@ Payload example:
 
 {
    "credit": 2,
-   "id": "5d523e63-a106-bbbb-f3af-11d72e8e2a5c",
-   "name": "Dolore tempora."
+   "id": "a464fd15-9f47-e3cc-bd80-3b5c5830c503",
+   "name": "Ipsam totam numquam necessitatibus perferendis minima."
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -137,7 +137,7 @@ Payload example:
 Payload example:
 
 {
-   "number": 5876805005436099547
+   "number": 5114884648824938968
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
@@ -159,8 +159,8 @@ Payload example:
 
 {
    "credit": 2,
-   "id": "5d523e63-a106-bbbb-f3af-11d72e8e2a5c",
-   "name": "Dolore tempora."
+   "id": "a464fd15-9f47-e3cc-bd80-3b5c5830c503",
+   "name": "Ipsam totam numquam necessitatibus perferendis minima."
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}

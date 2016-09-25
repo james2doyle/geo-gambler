@@ -7,19 +7,19 @@ definitions:
   CreateUsersPayload:
     example:
       credit: 2
-      id: 5d523e63-a106-bbbb-f3af-11d72e8e2a5c
-      name: Dolore tempora.
+      id: a464fd15-9f47-e3cc-bd80-3b5c5830c503
+      name: Ipsam totam numquam necessitatibus perferendis minima.
     properties:
       credit:
         example: 2
         minimum: 0
         type: integer
       id:
-        example: 5d523e63-a106-bbbb-f3af-11d72e8e2a5c
+        example: a464fd15-9f47-e3cc-bd80-3b5c5830c503
         pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
         type: string
       name:
-        example: Dolore tempora.
+        example: Ipsam totam numquam necessitatibus perferendis minima.
         type: string
     required:
     - name
@@ -110,44 +110,73 @@ definitions:
     type: array
   Play:
     example:
-      number: 5.876805e+18
+      number: 5.1148847e+18
     properties:
       number:
-        example: 5.876805e+18
+        example: 5.1148847e+18
         format: int64
         type: integer
     required:
     - number
     title: Play
     type: object
-  Result:
-    description: Result media type (default view)
+  Playresult:
+    description: Playresult media type (default view)
     example:
       detail: Nostrum impedit sapiente itaque ipsa laboriosam.
+      location:
+        can_play: true
+        distance: 0.4606863
+        game: numbers
+        id: 2
+        latitude: 0.2696802
+        longitude: 0.1301244
+        title: Ex ad.
+        wallet: 7.9883846e+18
+      status: true
+      user:
+        credit: 0
+        id: 5d523e63-a106-bbbb-f3af-11d72e8e2a5c
+        name: Tempora eveniet voluptatibus illum nesciunt non.
+      won: false
     properties:
       detail:
         example: Nostrum impedit sapiente itaque ipsa laboriosam.
         type: string
+      location:
+        $ref: '#/definitions/Location'
+      status:
+        example: true
+        type: boolean
+      user:
+        $ref: '#/definitions/User'
+      won:
+        example: false
+        type: boolean
     required:
     - detail
-    title: 'Mediatype identifier: result'
+    - status
+    - won
+    - user
+    - location
+    title: 'Mediatype identifier: playresult'
     type: object
   UpdateUsersPayload:
     example:
       credit: 2
-      id: 5d523e63-a106-bbbb-f3af-11d72e8e2a5c
-      name: Dolore tempora.
+      id: a464fd15-9f47-e3cc-bd80-3b5c5830c503
+      name: Ipsam totam numquam necessitatibus perferendis minima.
     properties:
       credit:
         example: 2
         minimum: 0
         type: integer
       id:
-        example: 5d523e63-a106-bbbb-f3af-11d72e8e2a5c
+        example: a464fd15-9f47-e3cc-bd80-3b5c5830c503
         pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
         type: string
       name:
-        example: Dolore tempora.
+        example: Ipsam totam numquam necessitatibus perferendis minima.
         type: string
     required:
     - name
@@ -156,12 +185,12 @@ definitions:
   User:
     description: User media type (default view)
     example:
-      credit: 2
+      credit: 0
       id: 5d523e63-a106-bbbb-f3af-11d72e8e2a5c
-      name: Dolore tempora.
+      name: Tempora eveniet voluptatibus illum nesciunt non.
     properties:
       credit:
-        example: 2
+        example: 0
         minimum: 0
         type: integer
       id:
@@ -169,11 +198,11 @@ definitions:
         pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
         type: string
       name:
-        example: Dolore tempora.
+        example: Tempora eveniet voluptatibus illum nesciunt non.
         type: string
     required:
     - name
-    title: 'Mediatype identifier: user'
+    title: 'Mediatype identifier: user; view=default'
     type: object
 host: localhost:8000
 info:
@@ -256,7 +285,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Result'
+            $ref: '#/definitions/Playresult'
         "401":
           description: Unauthorized
           schema:

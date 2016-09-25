@@ -65,8 +65,12 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 	canPlay, _ := CanPlayWithDistance(&ctx.Lat, &ctx.Long, location.Latitude, location.Longitude)
 
 	if !canPlay {
-		res := &app.Result{
-			Detail: "You Are Too Far Away",
+		res := &app.Playresult{
+			Detail:   "You Are Too Far Away",
+			Status:   false,
+			Won:      false,
+			User:     user,
+			Location: location,
 		}
 		return ctx.OK(res)
 	}
@@ -75,8 +79,12 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 	if int(number) != ctx.Payload.Number {
 		*user.Credit -= 10
 		location.Wallet += 10
-		res := &app.Result{
-			Detail: "You Lost 10 tokens",
+		res := &app.Playresult{
+			Detail:   "You Lost 10 tokens",
+			Status:   true,
+			Won:      false,
+			User:     user,
+			Location: location,
 		}
 		return ctx.OK(res)
 	}
@@ -88,8 +96,12 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 		location.Wallet = 10
 	}
 
-	res := &app.Result{
-		Detail: "You Won 10 tokens",
+	res := &app.Playresult{
+		Detail:   "You Won 10 tokens",
+		Status:   true,
+		Won:      true,
+		User:     user,
+		Location: location,
 	}
 	return ctx.OK(res)
 }
