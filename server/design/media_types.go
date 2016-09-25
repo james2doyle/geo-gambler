@@ -16,15 +16,17 @@ var Location = MediaType("Location", func() {
 			Enum("numbers")
 		})
 		Attribute("wallet", Integer)
+		Attribute("distance", Number)
 		Attribute("latitude", Number)
 		Attribute("longitude", Number)
 		Attribute("can_play", Boolean, func() {
 			Default(false)
 		})
-		Required("id", "title", "game", "wallet", "latitude", "longitude", "can_play")
+		Required("id", "title", "game", "wallet", "latitude", "longitude", "can_play", "distance")
 	})
 	View("default", func() {
 		Attribute("id")
+		Attribute("distance")
 		Attribute("title")
 		Attribute("game")
 		Attribute("wallet")

@@ -33,9 +33,9 @@ func (c *LocationsController) Get(ctx *app.GetLocationsContext) error {
 	}
 
 	loc := Locations[ctx.ID]
-	loc.CanPlay = canPlay(ctx.Lat, ctx.Long, loc.Latitude, loc.Longitude)
+	loc.CanPlay, loc.Distance = canPlayWithDistance(ctx.Lat, ctx.Long, loc.Latitude, loc.Longitude)
 
-	return ctx.OK(Locations[ctx.ID])
+	return ctx.OK(loc)
 }
 
 // Play runs the Play action.
@@ -94,12 +94,13 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 	return ctx.OK(res)
 }
 
-func canPlay(latUser, longUser *float64, latLoc, longLoc float64) bool {
+func canPlayWithDistance(latUser, longUser *float64, latLoc, longLoc float64) (bool, float64) {
 	if latUser == nil || longUser == nil {
-		return false
+		return false, -1.0
 	}
 
-	return distance(*latUser, *longUser, latLoc, longLoc) <= 0.01
+	dist := distance(*latUser, *longUser, latLoc, longLoc)
+	return dist <= 0.01, dist
 }
 
 func distance(latUser, longUser, latLoc, longLoc float64) (distKM float64) {

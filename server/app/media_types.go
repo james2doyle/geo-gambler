@@ -35,6 +35,7 @@ func (mt *Error) Validate() (err error) {
 // Identifier: location; view=default
 type Location struct {
 	CanPlay   bool    `form:"can_play" json:"can_play" xml:"can_play"`
+	Distance  float64 `form:"distance" json:"distance" xml:"distance"`
 	Game      string  `form:"game" json:"game" xml:"game"`
 	ID        int     `form:"id" json:"id" xml:"id"`
 	Latitude  float64 `form:"latitude" json:"latitude" xml:"latitude"`

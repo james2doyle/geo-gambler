@@ -41,17 +41,22 @@ definitions:
     description: Location media type (default view)
     example:
       can_play: true
+      distance: 0.4606863
       game: numbers
       id: 2
-      latitude: 0.35520813
-      longitude: 0.2696802
-      title: Et ex ad corrupti.
-      wallet: 6.429049e+18
+      latitude: 0.2696802
+      longitude: 0.1301244
+      title: Ex ad.
+      wallet: 7.9883846e+18
     properties:
       can_play:
         default: false
         example: true
         type: boolean
+      distance:
+        example: 0.4606863
+        format: double
+        type: number
       game:
         enum:
         - numbers
@@ -62,18 +67,18 @@ definitions:
         minimum: 0
         type: integer
       latitude:
-        example: 0.35520813
-        format: double
-        type: number
-      longitude:
         example: 0.2696802
         format: double
         type: number
+      longitude:
+        example: 0.1301244
+        format: double
+        type: number
       title:
-        example: Et ex ad corrupti.
+        example: Ex ad.
         type: string
       wallet:
-        example: 6.429049e+18
+        example: 7.9883846e+18
         format: int64
         type: integer
     required:
@@ -84,6 +89,7 @@ definitions:
     - latitude
     - longitude
     - can_play
+    - distance
     title: 'Mediatype identifier: location; view=default'
     type: object
   LocationCollection:
@@ -91,12 +97,13 @@ definitions:
       view)
     example:
     - can_play: true
+      distance: 0.4606863
       game: numbers
       id: 2
-      latitude: 0.35520813
-      longitude: 0.2696802
-      title: Et ex ad corrupti.
-      wallet: 6.429049e+18
+      latitude: 0.2696802
+      longitude: 0.1301244
+      title: Ex ad.
+      wallet: 7.9883846e+18
     items:
       $ref: '#/definitions/Location'
     title: 'Mediatype identifier: location; type=collection'
@@ -128,10 +135,10 @@ definitions:
   Result:
     description: Result media type (default view)
     example:
-      detail: Impedit sapiente itaque ipsa laboriosam.
+      detail: Nostrum impedit sapiente itaque ipsa laboriosam.
     properties:
       detail:
-        example: Impedit sapiente itaque ipsa laboriosam.
+        example: Nostrum impedit sapiente itaque ipsa laboriosam.
         type: string
     required:
     - detail
