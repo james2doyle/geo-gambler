@@ -10,7 +10,7 @@ module.exports = function(data) {
         map: data.map
       }).addListener('click', function() {
         // this is a marker
-        mapMarkerClick.call(this, infowindow, location, data.map);
+        mapMarkerClick.call(this, data.infowindow, location, data.map);
       });
     });
 
