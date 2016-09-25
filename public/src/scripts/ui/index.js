@@ -18,7 +18,9 @@ function updateUi(locations) {
       .then((response) => {
         return response.json();
       }).then((res) => {
-        updateUserDetails(locations, res);
+        if (res) {
+          updateUserDetails(locations, res);
+        }
         resolve(locations);
       }).catch((err) => {
         console.error(err);
