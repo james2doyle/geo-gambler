@@ -1,7 +1,26 @@
+const storage = require('../app/storage');
+
 module.exports = function() {
   const btnEvents = {
-    handlePlayClick: function(locationId) {
-      console.log(locationId);
+    handlePlayClick: function(id) {
+      var pos = storage.getLocation();
+      var auth = storage.getApiKey();
+      fetch(`https://geo.ohdoylerules.com/api/location/play/${id}?lat=${pos.lat}&long=${pos.lng}&auth=${auth}`, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          number: 5
+        })
+      }).then((response) => {
+        return response.json();
+      }).then((res) => {
+        console.log(res);
+      }).catch(function(err) {
+        console.error(err);
+      });
     }
   };
 
