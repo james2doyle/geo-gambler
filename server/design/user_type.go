@@ -6,8 +6,6 @@ import (
 )
 
 var Play = Type("Play", func() {
-	Attribute("latitude", Number)
-	Attribute("longitude", Number)
 	Attribute("number", Integer)
-	Required("latitude", "longitude", "number")
+	Required("number")
 })
