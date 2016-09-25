@@ -101,7 +101,7 @@ func (c *LocationsController) Play(ctx *app.PlayLocationsContext) error {
 		return ctx.OK(res)
 	}
 
-	number := rand.Int31n(10)
+	number := rand.Int31n(10) + 1
 	if int(number) != ctx.Payload.Number {
 		*user.Credit -= betAmount
 		location.Wallet += betAmount
